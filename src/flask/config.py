@@ -117,6 +117,14 @@ class Config(dict):
         d.__file__ = filename
         try:
             with open(filename, mode="rb") as config_file:
+                '''
+                ***************** OpenRefactory Warning *****************
+                Possible Dynamic Code Execution!
+                Path:
+                	File: config.py, Line: 120
+                		exec(compile(config_file.read(), filename, "exec"), d.__dict__)
+                		Tainted information is used in a sink.
+                '''
                 exec(compile(config_file.read(), filename, "exec"), d.__dict__)
         except OSError as e:
             if silent and e.errno in (errno.ENOENT, errno.EISDIR, errno.ENOTDIR):
